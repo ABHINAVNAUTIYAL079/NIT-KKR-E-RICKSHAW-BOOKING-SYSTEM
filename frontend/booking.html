@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Ride | NIT KKR E-Ride</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Booking Page Specific Styles */
+        .booking-section {
+            padding-top: 100px;
+            min-height: calc(100vh - 80px); /* Adjust for footer if needed */
+            background-color: #f3f4f6;
+        }
+
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            height: calc(100vh - 120px);
+            padding-bottom: 2rem;
+        }
+
+        .booking-form-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .map-placeholder {
+            background-color: #e5e7eb;
+            border-radius: var(--radius);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1.5rem;
+            background-image: url('https://img.freepik.com/free-vector/map-light-concept-illustration_114360-192.jpg?size=626&ext=jpg'); /* Placeholder map image */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--radius);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .ride-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ride-type {
+            flex: 1;
+            border: 1px solid #d1d5db;
+            padding: 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .ride-type.active {
+            border-color: var(--primary);
+            background-color: rgba(37, 99, 235, 0.05);
+            color: var(--primary);
+        }
+
+        .ride-type i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-estimate {
+            background-color: #f0f9ff;
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .price-estimate h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .booking-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            
+            .map-placeholder {
+                height: 300px;
+                order: -1; /* Show map on top on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header (Same as index) -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                     <a href="index.html" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-solid fa-bolt"></i> NITKKR<span>Ride</span></a>
+                </div>
+                <!-- Simple nav for booking page -->
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" class="active">Book Ride</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="booking-section">
+        <div class="container booking-container">
+            <div class="booking-form-card">
+                <h2>Request a Ride</h2>
+                <p style="color: var(--gray); margin-bottom: 2rem;">Choose your pickup and drop-off points within NIT KKR.</p>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="pickup">Pickup Location</label>
+                        <select id="pickup" class="form-control" required>
+                            <option value="" disabled selected>Select Pickup Point</option>
+                            <option value="gate1">Gate No. 1</option>
+                            <option value="admin">Admin Block</option>
+                            <option value="sports">Sports Complex</option>
+                            <option value="h1">Hostel H1</option>
+                            <option value="h2">Hostel H2</option>
+                            <option value="h3">Hostel H3</option>
+                            <option value="h4">Hostel H4</option>
+                            <option value="girls_hostel">Kalpana Chawla Bhawan</option>
+                            <option value="lhc">LHC (Lecture Hall Complex)</option>
+                            <option value="ccn">CCN</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dropoff">Drop-off Location</label>
+                        <select id="dropoff" class="form-control" required>
+                             <option value="" disabled selected>Select Drop-off Point</option>
+                             <option value="gate1">Gate No. 1</option>
+                             <option value="admin">Admin Block</option>
+                             <option value="jubilee">Golden Jubilee Hall</option>
+                             <option value="market">NIT Market</option>
+                             <option value="lhc">LHC</option>
+                             <option value="departments">Department Block</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ride Type</label>
+                        <div class="ride-options">
+                            <div class="ride-type active" onclick="selectRideType(this, 'shared')">
+                                <i class="fa-solid fa-users"></i>
+                                Shared
+                            </div>
+                            <div class="ride-type" onclick="selectRideType(this, 'private')">
+                                <i class="fa-solid fa-user"></i>
+                                Private
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="price-estimate">
+                        <p>Estimated Fare</p>
+                        <h3 id="fareDisplay">₹10</h3>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">Confirm Booking</button>
+                </form>
+            </div>
+            
+            <div class="map-placeholder">
+                <div class="map-overlay">
+                    <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Live Map View
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Inline script for specific page logic
+        function selectRideType(element, type) {
+            document.querySelectorAll('.ride-type').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Simple fare logic update
+            const fareDisplay = document.getElementById('fareDisplay');
+            if (type === 'private') {
+                fareDisplay.innerText = '₹40';
+            } else {
+                fareDisplay.innerText = '₹10';
+            }
+        }
+    </script>
+</body>
+</html>
