@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Ride | NIT KKR E-Ride</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">d
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Booking Page Specific Styles */
         .booking-section {
             padding-top: 100px;
-            min-height: calc(100vh - 80px); /* Adjust for footer if needed */
-            background-color: #f3f4f6;
+            min-height: calc(100vh - 80px);
+            /* Adjust for footer if needed */
+            background-color: #f0fdf4;
         }
 
         .booking-container {
@@ -41,12 +43,13 @@
             justify-content: center;
             color: var(--gray);
             font-size: 1.5rem;
-            background-image: url('https://img.freepik.com/free-vector/map-light-concept-illustration_114360-192.jpg?size=626&ext=jpg'); /* Placeholder map image */
+            background-image: url('https://img.freepik.com/free-vector/map-light-concept-illustration_114360-192.jpg?size=626&ext=jpg');
+            /* Placeholder map image */
             background-size: cover;
             background-position: center;
             position: relative;
         }
-        
+
         .map-overlay {
             position: absolute;
             background: rgba(255, 255, 255, 0.8);
@@ -79,7 +82,7 @@
         .form-control:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
         }
 
         .ride-options {
@@ -100,7 +103,7 @@
 
         .ride-type.active {
             border-color: var(--primary);
-            background-color: rgba(37, 99, 235, 0.05);
+            background-color: rgba(22, 163, 74, 0.05);
             color: var(--primary);
         }
 
@@ -109,16 +112,16 @@
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
-        
+
         .price-estimate {
-            background-color: #f0f9ff;
+            background-color: #f0fdf4;
             padding: 1rem;
             border-radius: var(--radius);
             text-align: center;
             margin-bottom: 1.5rem;
             border-left: 4px solid var(--primary);
         }
-        
+
         .price-estimate h3 {
             color: var(--primary);
             font-size: 1.5rem;
@@ -129,14 +132,16 @@
                 grid-template-columns: 1fr;
                 height: auto;
             }
-            
+
             .map-placeholder {
                 height: 300px;
-                order: -1; /* Show map on top on mobile */
+                order: -1;
+                /* Show map on top on mobile */
             }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header (Same as index) -->
@@ -144,7 +149,9 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                     <a href="index.html" style="display:flex; align-items:center; gap:0.5rem;"><i class="fa-solid fa-bolt"></i> NITKKR<span>Ride</span></a>
+                    <a href="index.html" style="display:flex; align-items:center; gap:0.5rem;"><img class="nit-logo"
+                            src="nit_kkr_logo.png" alt="NIT KKR"><i class="fa-solid fa-leaf"></i>
+                        NITKKR<span>Ride</span></a>
                 </div>
                 <!-- Simple nav for booking page -->
                 <ul class="nav-links">
@@ -159,12 +166,17 @@
     </header>
 
     <section class="booking-section">
-        <div class="container booking-container">
+        <div class="container booking-container" style="grid-template-columns: 1fr 1.5fr 0.8fr;">
             <div class="booking-form-card">
+                <div class="nearby-indicator">
+                    <div class="pulse"></div>
+                    <span>3 E-Rickshaws nearby</span>
+                </div>
                 <h2>Request a Ride</h2>
-                <p style="color: var(--gray); margin-bottom: 2rem;">Choose your pickup and drop-off points within NIT KKR.</p>
-                
-                <form id="bookingForm">
+                <p style="color: var(--gray); margin-bottom: 2rem;">Choose your pickup and drop-off points within NIT
+                    KKR.</p>
+
+                <form id="bookingForm" onsubmit="confirmRide(event)">
                     <div class="form-group">
                         <label for="pickup">Pickup Location</label>
                         <select id="pickup" class="form-control" required>
@@ -185,13 +197,13 @@
                     <div class="form-group">
                         <label for="dropoff">Drop-off Location</label>
                         <select id="dropoff" class="form-control" required>
-                             <option value="" disabled selected>Select Drop-off Point</option>
-                             <option value="gate1">Gate No. 1</option>
-                             <option value="admin">Admin Block</option>
-                             <option value="jubilee">Golden Jubilee Hall</option>
-                             <option value="market">NIT Market</option>
-                             <option value="lhc">LHC</option>
-                             <option value="departments">Department Block</option>
+                            <option value="" disabled selected>Select Drop-off Point</option>
+                            <option value="gate1">Gate No. 1</option>
+                            <option value="admin">Admin Block</option>
+                            <option value="jubilee">Golden Jubilee Hall</option>
+                            <option value="market">NIT Market</option>
+                            <option value="lhc">LHC</option>
+                            <option value="departments">Department Block</option>
                         </select>
                     </div>
 
@@ -208,7 +220,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="price-estimate">
                         <p>Estimated Fare</p>
                         <h3 id="fareDisplay">₹10</h3>
@@ -216,11 +228,63 @@
 
                     <button type="submit" class="btn-primary" style="width: 100%;">Confirm Booking</button>
                 </form>
+
+                <!-- Driver Card (Shows after booking) -->
+                <div id="driverCard" class="driver-card">
+                    <h3>Matched Driver</h3>
+                    <div class="driver-info">
+                        <div class="driver-img">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h4 id="driverName">Rajesh Kumar</h4>
+                            <p style="font-size: 0.8rem; color: var(--gray);"><i class="fa-solid fa-star"
+                                    style="color: #fbbf24;"></i> 4.8 (234 rides)</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span>Vehicle No.</span>
+                        <span class="stat-value">HR-01-E-1234</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>ETA</span>
+                        <span class="stat-value" id="etaDisplay">2 mins</span>
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <span class="badge badge-success">Driver is on the way</span>
+                    </div>
+                </div>
             </div>
-            
+
             <div class="map-placeholder">
                 <div class="map-overlay">
                     <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i> Live Map View
+                </div>
+            </div>
+
+            <!-- Stats & History Column -->
+            <div class="stats-section">
+                <div class="stats-card">
+                    <h3 style="margin-bottom: 1rem;">Your Stats Today</h3>
+                    <div class="stat-item">
+                        <span>Rides Taken</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Total Spent</span>
+                        <span class="stat-value">₹45</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>CO2 Saved</span>
+                        <span class="stat-value">1.2 kg</span>
+                    </div>
+                </div>
+
+                <div class="stats-card" style="margin-top: 1rem;">
+                    <h3 style="margin-bottom: 1rem;">Quick Actions</h3>
+                    <button class="btn-outline" style="width: 100%; margin-bottom: 0.5rem; padding: 0.5rem;">Semester
+                        Pass</button>
+                    <button class="btn-outline" style="width: 100%; padding: 0.5rem;">Ride History</button>
                 </div>
             </div>
         </div>
@@ -232,7 +296,7 @@
         function selectRideType(element, type) {
             document.querySelectorAll('.ride-type').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
-            
+
             // Simple fare logic update
             const fareDisplay = document.getElementById('fareDisplay');
             if (type === 'private') {
@@ -241,6 +305,19 @@
                 fareDisplay.innerText = '₹10';
             }
         }
+
+        function confirmRide(event) {
+            event.preventDefault();
+            const driverCard = document.getElementById('driverCard');
+            driverCard.style.display = 'block';
+
+            // Scroll to driver card
+            driverCard.scrollIntoView({ behavior: 'smooth' });
+
+            // Notification (can be expanded later)
+            alert("Booking confirmed! Your driver is on the way.");
+        }
     </script>
 </body>
+
 </html>

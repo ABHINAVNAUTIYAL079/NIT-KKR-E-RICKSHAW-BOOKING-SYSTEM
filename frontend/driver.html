@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Dashboard | NIT KKR E-Ride</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="index.html" style="display:flex; align-items:center; gap:0.5rem;"><img class="nit-logo"
+                            src="nit_kkr_logo.png" alt="NIT KKR"><i class="fa-solid fa-leaf"></i>
+                        NITKKR<span>Ride</span></a>
+                </div>
+                <div class="driver-profile" style="display: flex; align-items:center; gap: 1rem;">
+                    <span>Welcome, <strong>Rajesh</strong></span>
+                    <div class="driver-img" style="width: 40px; height: 40px; font-size: 1rem;">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="driver-dash">
+        <div class="container">
+            <div class="driver-info-header">
+                <div>
+                    <h2>Driver Dashboard</h2>
+                    <p style="color: var(--gray);">Manage your rides and availability</p>
+                </div>
+                <div id="statusToggle" class="status-toggle" onclick="toggleStatus()">
+                    <div class="status-dot"></div>
+                    <span id="statusText">Offline</span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="value">12</span>
+                    <span class="label">Rides Completed Today</span>
+                </div>
+                <div class="stat-box">
+                    <span class="value">₹180</span>
+                    <span class="label">Total Earnings</span>
+                </div>
+                <div class="stat-box">
+                    <span class="value">4.8</span>
+                    <span class="label">Current Rating</span>
+                </div>
+            </div>
+
+            <div id="newRequest" class="request-card" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="color: var(--primary);"><i class="fa-solid fa-bell"></i> New Ride Request!</h3>
+                    <span class="badge badge-success">₹15.00</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <p style="font-size: 0.8rem; color: var(--gray);">PICKUP</p>
+                        <p><strong>Main Gate</strong></p>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.8rem; color: var(--gray);">DROP</p>
+                        <p><strong>Academic Block</strong></p>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem;">Student: <strong>Aman (Roll:
+                        1221XXXX)</strong></p>
+                <div class="action-btns">
+                    <button class="btn-primary" onclick="acceptRide()">Accept Ride</button>
+                    <button class="btn-reject" onclick="rejectRide()">Reject</button>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <h3 style="margin-bottom: 1rem;">Recent Rides</h3>
+                <div class="stat-item" style="border-bottom: 1px solid #f1f5f9; padding: 1rem 0;">
+                    <div>
+                        <p><strong>Hostel H1 → LHC</strong></p>
+                        <p style="font-size: 0.8rem; color: var(--gray);">10:30 AM | Shared Ride</p>
+                    </div>
+                    <span class="stat-value">₹10</span>
+                </div>
+                <div class="stat-item" style="border-bottom: 1px solid #f1f5f9; padding: 1rem 0;">
+                    <div>
+                        <p><strong>Admin Block → Gate 1</strong></p>
+                        <p style="font-size: 0.8rem; color: var(--gray);">09:45 AM | Private Ride</p>
+                    </div>
+                    <span class="stat-value">₹40</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleStatus() {
+            const toggle = document.getElementById('statusToggle');
+            const statusText = document.getElementById('statusText');
+            const requestCard = document.getElementById('newRequest');
+
+            if (toggle.classList.contains('online')) {
+                toggle.classList.remove('online');
+                statusText.innerText = 'Offline';
+                requestCard.style.display = 'none';
+            } else {
+                toggle.classList.add('online');
+                statusText.innerText = 'Online';
+                // Simulate a request after 2 seconds of being online
+                setTimeout(() => {
+                    requestCard.style.display = 'block';
+                    requestCard.scrollIntoView({ behavior: 'smooth' });
+                }, 2000);
+            }
+        }
+
+        function acceptRide() {
+            alert("Ride Accepted! Please proceed to Main Gate.");
+            document.getElementById('newRequest').style.display = 'none';
+        }
+
+        function rejectRide() {
+            if (confirm("Are you sure you want to reject this ride?")) {
+                document.getElementById('newRequest').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
